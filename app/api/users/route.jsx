@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import schema from "./schema";
 import prisma from "@/prisma/client";
+import bcryptjs from "bcryptjs";
 
 export async function GET(request) {
   const users = await prisma.user.findMany();
@@ -23,14 +24,20 @@ export async function POST(request) {
   });
 
   if (user) {
-    return NextResponse.json({ error: "User already exist" }, { status: 500 });
+    return NextResponse.json(
+      { message: "User already exist" },
+      { status: 501 }
+    );
   }
+
+  const salt = await bcryptjs.genSalt(10);
+  const hashedPassword = await bcryptjs.hash(body.password, salt);
 
   const newUser = await prisma.user.create({
     data: {
       name: body.name,
       email: body.email,
-      password: body.password,
+      password: hashedPassword,
     },
   });
 
