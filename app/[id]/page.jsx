@@ -31,7 +31,7 @@ const IndividualPost = async ({ params }) => {
 
   return (
     <>
-      <main className="flex flex-col mt-4 mx-7 px-4">
+      <main className="flex flex-col mt-4 mx-auto px-4 max-w-2xl">
         <h1 className="font-bold text-2xl text-blue-700 mb-2">{post.title}</h1>
         <div className="flex flex-row gap-3 text-sm text-zinc-400 mb-4">
           <h4>{post.postUser}</h4>
@@ -49,7 +49,7 @@ const IndividualPost = async ({ params }) => {
           <EditAndDeleteButtons post={post} />
         </div>
       </main>
-      <aside className="mt-1 mx-7 p-5">
+      <aside className="mt-1 mx-auto p-5 max-w-2xl">
         <h3 className="font-bold">Comments</h3>
         <AddComment />
       </aside>

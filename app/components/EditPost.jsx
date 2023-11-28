@@ -73,7 +73,7 @@ const EditPost = ({ post }) => {
   };
 
   return (
-    <main>
+    <main className="max-w-2xl mx-auto">
       <form
         className="flex flex-col mx-7 my-5 gap-3"
         onSubmit={editPostHandler}

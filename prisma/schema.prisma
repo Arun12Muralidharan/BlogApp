@@ -25,7 +25,7 @@ model Post {
   description   String
   postUserEmail String
   postUser      String
-  user          User      @relation(fields: [postUserEmail], references: [email])
+  user          User      @relation(fields: [postUserEmail], references: [email], onDelete: Cascade)
   createdAt     DateTime  @default(now())
   comments      Comment[]
 }
@@ -35,7 +35,7 @@ model Comment {
   comment          String
   commentUserEmail String
   commentUser      String
-  user             User   @relation(fields: [commentUserEmail], references: [email])
+  user             User   @relation(fields: [commentUserEmail], references: [email], onDelete: Cascade)
   postId           String @db.ObjectId
-  post             Post   @relation(fields: [postId], references: [id])
+  post             Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

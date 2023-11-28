@@ -14,7 +14,7 @@ export default async function Home() {
   ));
 
   return (
-    <main className="flex flex-col mx-7 my-3 gap-3 mt-3">
+    <main className="flex flex-col mx-auto my-3 gap-3 mt-3 max-w-2xl">
       <h1 className="text-blue-700 font-bold text-xl mb-2">Blogs</h1>
       {content}
     </main>
