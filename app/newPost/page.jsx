@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-const NewPost = (request) => {
+const NewPost = () => {
   const titleRef = useRef();
   const contentRef = useRef();
 
@@ -18,12 +18,6 @@ const NewPost = (request) => {
   const { data: session } = useSession();
   // console.log(session);
   const router = useRouter();
-
-  useEffect(() => {
-    if (!session) {
-      redirect("/login");
-    }
-  }, [session]);
 
   const createPostHandler = async (e) => {
     e.preventDefault();

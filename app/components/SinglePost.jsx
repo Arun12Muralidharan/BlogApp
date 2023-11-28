@@ -1,7 +1,6 @@
 import React from "react";
 
 const SinglePost = ({ post }) => {
-  // console.log(post);
   return (
     <section className="cursor-pointer shadow-lg border border-blue-700 rounded-md px-2 py-1 mt-1">
       <h2 className="text-xl font-bold text-blue-700">{post.title}</h2>

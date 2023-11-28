@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter, redirect } from "next/navigation";
 import { Spinner } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
@@ -17,12 +17,6 @@ const EditPost = ({ post }) => {
   const { data: session } = useSession();
   // console.log(session);
   const router = useRouter();
-
-  useEffect(() => {
-    if (!session) {
-      redirect("/login");
-    }
-  }, [session]);
 
   let authorizedUser = true;
   if (post.postUserEmail !== session?.user?.email) {

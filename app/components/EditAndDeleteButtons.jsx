@@ -29,7 +29,7 @@ const EditAndDeleteButtons = ({ post }) => {
       body: {},
     });
 
-    console.log(deletedPost);
+    // console.log(deletedPost);
 
     if (deletedPost.status === 404) {
       return <span>Post not deleted</span>;
