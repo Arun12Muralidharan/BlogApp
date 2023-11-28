@@ -5,7 +5,9 @@ import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Spinner } from "@material-tailwind/react";
 
-const RegisterPage = () => {
+export const dynamic = "force-dynamic";
+
+const RegisterPage = (request) => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();

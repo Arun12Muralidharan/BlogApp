@@ -2,7 +2,9 @@ import prisma from "@/prisma/client";
 import SinglePost from "./components/SinglePost";
 import Link from "next/link";
 
-export default async function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home(request) {
   const posts = await prisma.post.findMany({}, { cache: "no-store" });
 
   const orderedPosts = posts.sort((a, b) => b.createdAt - a.createdAt);

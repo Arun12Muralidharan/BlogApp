@@ -5,7 +5,9 @@ import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import Link from "next/link";
 
-const NewPost = () => {
+export const dynamic = "force-dynamic";
+
+const NewPost = (request) => {
   const titleRef = useRef();
   const contentRef = useRef();
 
