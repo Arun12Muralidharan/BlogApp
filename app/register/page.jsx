@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Spinner } from "@material-tailwind/react";
 
 const RegisterPage = () => {
   const nameRef = useRef();
@@ -18,7 +19,6 @@ const RegisterPage = () => {
   const { data: session } = useSession();
   if (session) {
     redirect("/");
-    return null;
   }
 
   const handleSubmit = async (e) => {
@@ -97,8 +97,8 @@ const RegisterPage = () => {
             required
             minLength={6}
           />
-          <button className="bg-blue-700 text-white font-bold rounded-xl cursor-pointer px-6 py-2">
-            {loading ? "Registering User" : "Register"}
+          <button className="bg-blue-700 text-white font-bold rounded-xl mx-auto px-6 py-2">
+            {loading ? <Spinner /> : "Register"}
           </button>
         </form>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Spinner } from "@material-tailwind/react";
 
 const LoginPage = () => {
   const emailRef = useRef();
@@ -19,7 +20,6 @@ const LoginPage = () => {
   useEffect(() => {
     if (session) {
       redirect("/");
-      return null;
     }
   }, [session]);
 
@@ -67,8 +67,8 @@ const LoginPage = () => {
             minLength={6}
             required
           />
-          <button className="bg-blue-700 text-white font-bold rounded-xl cursor-pointer px-6 py-2">
-            {loading ? "Loading" : "Login"}
+          <button className="bg-blue-700 text-white font-bold rounded-xl mx-auto cursor-pointer px-6 py-2">
+            {loading ? <Spinner /> : "Login"}
           </button>
         </form>
 

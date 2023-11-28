@@ -21,7 +21,7 @@ export async function PUT(request, { params }) {
   if (!validation.success) {
     return NextResponse.json(
       { error: validation.error.errors },
-      { status: 500 }
+      { status: 501 }
     );
   }
 
@@ -39,6 +39,7 @@ export async function PUT(request, { params }) {
       title: body.title,
       description: body.description,
       postUserEmail: body.postUserEmail,
+      postUser: body.postUser,
     },
   });
 

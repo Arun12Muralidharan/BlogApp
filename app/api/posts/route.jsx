@@ -10,12 +10,13 @@ export async function GET(request) {
 
 export async function POST(request) {
   const body = await request.json();
+  // console.log(body);
   const validation = schema.safeParse(body);
 
   if (!validation.success) {
     return NextResponse.json(
       { error: validation.error.errors },
-      { status: 500 }
+      { status: 501 }
     );
   }
 
@@ -24,6 +25,7 @@ export async function POST(request) {
       title: body.title,
       description: body.description,
       postUserEmail: body.postUserEmail,
+      postUser: body.postUser,
     },
   });
 

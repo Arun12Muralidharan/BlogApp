@@ -24,6 +24,7 @@ model Post {
   title         String
   description   String
   postUserEmail String
+  postUser      String
   user          User      @relation(fields: [postUserEmail], references: [email])
   createdAt     DateTime  @default(now())
   comments      Comment[]
@@ -33,6 +34,7 @@ model Comment {
   id               String @id @default(auto()) @map("_id") @db.ObjectId
   comment          String
   commentUserEmail String
+  commentUser      String
   user             User   @relation(fields: [commentUserEmail], references: [email])
   postId           String @db.ObjectId
   post             Post   @relation(fields: [postId], references: [id])

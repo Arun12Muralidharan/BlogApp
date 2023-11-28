@@ -29,8 +29,8 @@ const NavBar = () => {
           <div className="flex flex-row justify-between gap-7">
             {session ? (
               <>
-                <Link className="cursor-pointer" href={"/"}>
-                  {session.user.name}&apos;s Posts
+                <Link className="cursor-pointer" href={"/newPost"}>
+                  Create New Post
                 </Link>
                 <div className="cursor-pointer" onClick={handleSignOut}>
                   Logout
