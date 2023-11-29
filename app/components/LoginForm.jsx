@@ -1,27 +1,22 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@material-tailwind/react";
 
 const LoginForm = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-
-  const [loading, setLoading] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const router = useRouter();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading("Loading");
-    setError("");
-
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+    setLoading(true);
 
     const user = await signIn("credentials", {
       email,
@@ -30,13 +25,15 @@ const LoginForm = () => {
     });
 
     if (!user.ok) {
-      setLoading("");
+      setLoading(false);
       setError("Invalid credentials");
       return;
     }
 
-    setLoading("");
-    router.replace("/");
+    setLoading(false);
+    setEmail("");
+    setPassword("");
+    router.push("/");
   };
 
   return (
@@ -48,14 +45,16 @@ const LoginForm = () => {
             className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
             type="email"
             placeholder="Email"
-            ref={emailRef}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
             type="password"
             placeholder="Password"
-            ref={passwordRef}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             minLength={6}
             required
           />

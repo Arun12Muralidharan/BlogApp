@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@material-tailwind/react";
 
 const RegisterUserForm = () => {
-  const nameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
 
   const router = useRouter();
@@ -20,18 +20,15 @@ const RegisterUserForm = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    setLoading("Loading");
-    let name = nameRef.current.value;
-    let email = emailRef.current.value;
-    let password = passwordRef.current.value;
+    setLoading(true);
 
     if (!name || !email || !password) {
       setError("All fields are required");
-      setLoading("");
+      setLoading(false);
       return null;
     }
 
-    const registerUser = await fetch("api/users", {
+    const registerUser = await fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +40,7 @@ const RegisterUserForm = () => {
       }),
     });
 
-    setLoading("");
+    setLoading(false);
 
     if (registerUser.status === 500) {
       setError("Fields doesn't met required criteria");
@@ -53,10 +50,6 @@ const RegisterUserForm = () => {
       setError("User already exist");
       return null;
     }
-
-    nameRef.current.value = "";
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
 
     if (registerUser.status === 201) {
       setSuccess("User Created");
@@ -73,7 +66,8 @@ const RegisterUserForm = () => {
             className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
             type="text"
             placeholder="Name"
-            ref={nameRef}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
             minLength={3}
           />
@@ -81,14 +75,16 @@ const RegisterUserForm = () => {
             className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
             type="email"
             placeholder="Email"
-            ref={emailRef}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
             type="password"
             placeholder="Password"
-            ref={passwordRef}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
           />

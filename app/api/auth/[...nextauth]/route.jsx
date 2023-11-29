@@ -14,12 +14,15 @@ export const authOptions = {
         const user = await prisma.user.findUnique({
           where: { email: email },
         });
-
-        if (!user) return null;
+        if (!user) {
+          return null;
+        }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
 
-        if (!passwordMatch) return null;
+        if (!passwordMatch) {
+          return null;
+        }
 
         return user;
       },
@@ -29,9 +32,9 @@ export const authOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/",
-  },
+  // pages: {
+  //   signIn: "/",
+  // },
 };
 
 const handler = NextAuth(authOptions);
