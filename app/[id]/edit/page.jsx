@@ -4,9 +4,13 @@ import prisma from "@/prisma/client";
 import EditPost from "@/app/components/EditPost";
 
 const EditBlog = async ({ params }) => {
-  const post = await prisma.post.findUnique({
-    where: { id: params.id },
-  });
+  const post = await prisma.post.findUnique(
+    {
+      where: { id: params.id },
+    },
+    { next: { revalidate: 0 } },
+    { cache: "no-store" }
+  );
 
   if (!post) {
     return (

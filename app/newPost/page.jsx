@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -8,8 +8,8 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 const NewPost = () => {
-  const titleRef = useRef();
-  const contentRef = useRef();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const [loading, setLoading] = useState("");
   const [success, setSuccess] = useState("");
@@ -24,9 +24,6 @@ const NewPost = () => {
     setLoading("loading...");
     setError("");
     setSuccess("");
-
-    let title = titleRef.current.value;
-    let content = contentRef.current.value;
 
     if (!title || !content) {
       setError("All fields are required");
@@ -54,12 +51,12 @@ const NewPost = () => {
       return null;
     }
 
-    titleRef.current.value = "";
-    contentRef.current.value = "";
-
     if (newPost.status === 201) {
       setSuccess("Post Created");
+      setTitle("");
+      setContent("");
       router.push("/");
+      router.refresh();
     }
   };
 
@@ -77,7 +74,8 @@ const NewPost = () => {
           placeholder="Blog Title"
           className="border border-blue-600 px-2 py-1 rounded-md"
           required
-          ref={titleRef}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
           cols="30"
@@ -85,7 +83,8 @@ const NewPost = () => {
           placeholder="Blog content..."
           className="border border-blue-600 px-2 py-1 rounded-md"
           required
-          ref={contentRef}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
         ></textarea>
         {session && (
           <div className="flex flex-row justify-between">

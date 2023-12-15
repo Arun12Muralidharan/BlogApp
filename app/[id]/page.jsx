@@ -11,6 +11,7 @@ const IndividualPost = async ({ params }) => {
     {
       where: { id: params.id },
     },
+    { next: { revalidate: 0 } },
     { cache: "no-store" }
   );
 

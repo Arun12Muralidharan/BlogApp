@@ -5,9 +5,24 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 export default async function Home(request) {
-  const posts = await prisma.post.findMany({}, { cache: "no-store" });
+  const posts = await prisma.post.findMany(
+    {},
+    { next: { revalidate: 0 } },
+    { cache: "no-store" }
+  );
 
-  const orderedPosts = posts.sort((a, b) => b.createdAt - a.createdAt);
+  // const postsTest = await fetch(
+  //   `${process.env.NEXTAUTH_URL}/api/posts`,
+  //   {
+  //     cache: "no-store",
+  //   },
+  //   { next: { revalidate: 0 } }
+  // );
+  // const { posts } = await postsTest.json();
+
+  const orderedPosts = posts.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   const content = orderedPosts.map((post) => (
     <Link key={post.id} href={`/${post.id}`}>
