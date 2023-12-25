@@ -3,7 +3,18 @@ import schema from "./schema";
 import prisma from "@/prisma/client";
 
 export async function GET(request) {
-  const posts = await prisma.post.findMany();
+  const pageName = request.url.split("?")[1];
+  const pageNum = +pageName?.split("=")[1] || 1;
+
+  const posts = await prisma.post.findMany({
+    orderBy: [
+      {
+        createdAt: "desc",
+      },
+    ],
+    skip: (pageNum - 1) * 5,
+    take: 5,
+  });
 
   return NextResponse.json({ message: "all posts", posts }, { status: 200 });
 }

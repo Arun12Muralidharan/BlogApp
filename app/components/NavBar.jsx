@@ -26,7 +26,7 @@ const NavBar = () => {
           BlogApp
         </div>
         <nav>
-          <div className="flex flex-row justify-between gap-7">
+          <div className="flex flex-row justify-between gap-5">
             {session ? (
               <>
                 <Link className="cursor-pointer" href={"/newPost"}>

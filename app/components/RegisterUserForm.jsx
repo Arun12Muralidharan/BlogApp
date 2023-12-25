@@ -59,11 +59,11 @@ const RegisterUserForm = () => {
 
   return (
     <div className="grid place-items-center mt-28">
-      <div className="shadow-lg p-5 rounded-lg border-t-4 border-blue-700">
-        <h1 className="text-xl font-bold my-4">Register</h1>
+      <div className="shadow-lg p-5 rounded-lg border-t-4 border-blue-700 w-4/5 max-w-sm">
+        <h1 className="text-xl font-bold my-4 text-center">Register</h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
-            className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
+            className="w-full border border-blue-700 py-2 px-6 rounded-xl mx-auto bg-zinc-100/40"
             type="text"
             placeholder="Name"
             value={name}
@@ -72,7 +72,7 @@ const RegisterUserForm = () => {
             minLength={3}
           />
           <input
-            className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
+            className="w-full border border-blue-700 py-2 px-6 rounded-xl mx-auto bg-zinc-100/40"
             type="email"
             placeholder="Email"
             value={email}
@@ -80,7 +80,7 @@ const RegisterUserForm = () => {
             required
           />
           <input
-            className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
+            className="w-full border border-blue-700 py-2 px-6 rounded-xl mx-auto bg-zinc-100/40"
             type="password"
             placeholder="Password"
             value={password}
