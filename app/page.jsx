@@ -1,39 +1,75 @@
-import prisma from "@/prisma/client";
+"use client";
 import SinglePost from "./components/SinglePost";
 import Link from "next/link";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import fetchResults from "./lib/fetchResults";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
-export const dynamic = "force-dynamic";
+export default function Home(request) {
+  let content;
 
-export default async function Home(request) {
-  const posts = await prisma.post.findMany(
-    {},
-    { next: { revalidate: 0 } },
-    { cache: "no-store" }
+  const { ref, inView } = useInView();
+
+  // const { data, isLoading, isSuccess, isError, error } = useQuery({
+  //   queryKey: ["posts"],
+  //   queryFn: () => fetchResults(),
+  // });
+
+  const {
+    data,
+    isError,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    error,
+  } = useInfiniteQuery({
+    queryKey: ["posts"],
+    queryFn: fetchResults,
+    initialPageParam: 1,
+    getNextPageParam: (lastpage, allpages) => {
+      return lastpage.posts.length ? allpages.length + 1 : undefined;
+    },
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, inView]);
+
+  if (isError) {
+    content = <p>Error in loading...</p>;
+    return;
+  }
+  if (isLoading) {
+    content = <p>Loading...</p>;
+    return;
+  }
+
+  content = data.pages.map(({ posts }) =>
+    posts.map((post, index) => {
+      if (posts.length - 1 === index) {
+        return (
+          <Link key={post.id} href={`/${post.id}`}>
+            <SinglePost key={post.id} post={post} innerRef={ref} />
+          </Link>
+        );
+      }
+      return (
+        <Link key={post.id} href={`/${post.id}`}>
+          <SinglePost key={post.id} post={post} />
+        </Link>
+      );
+    })
   );
-
-  // const postsTest = await fetch(
-  //   `${process.env.NEXTAUTH_URL}/api/posts`,
-  //   {
-  //     cache: "no-store",
-  //   },
-  //   { next: { revalidate: 0 } }
-  // );
-  // const { posts } = await postsTest.json();
-
-  const orderedPosts = posts.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
-
-  const content = orderedPosts.map((post) => (
-    <Link key={post.id} href={`/${post.id}`}>
-      <SinglePost key={post.id} post={post} />
-    </Link>
-  ));
 
   return (
-    <main className="flex flex-col mx-auto my-3 gap-3 mt-3 max-w-2xl">
+    <main className="flex flex-col mx-auto mt-3 mb-5 gap-3 max-w-xl box-border w-4/5 lg:max-w-2xl">
       <h1 className="text-blue-700 font-bold text-xl mb-2">Blogs</h1>
       {content}
+      {isFetchingNextPage && <h3>Loading...</h3>}
     </main>
   );
 }

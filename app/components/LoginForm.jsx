@@ -38,11 +38,11 @@ const LoginForm = () => {
 
   return (
     <div className="grid place-items-center mt-28">
-      <div className="shadow-lg p-5 rounded-lg border-t-4 border-blue-700">
-        <h1 className="text-xl font-bold my-4">Login</h1>
+      <div className="shadow-lg p-5 rounded-lg border-t-4 border-blue-700 w-4/5 max-w-sm">
+        <h1 className="text-xl font-bold my-4 text-center">Login</h1>
         <form onSubmit={submitHandler} className="flex flex-col gap-4">
           <input
-            className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
+            className="w-full border border-blue-700 py-2 px-6 rounded-xl mx-auto bg-zinc-100/40"
             type="email"
             placeholder="Email"
             value={email}
@@ -50,7 +50,7 @@ const LoginForm = () => {
             required
           />
           <input
-            className="w-96 border border-blue-700 py-2 px-6 rounded-xl bg-zinc-100/40"
+            className="w-full border border-blue-700 py-2 px-6 rounded-xl mx-auto bg-zinc-100/40"
             type="password"
             placeholder="Password"
             value={password}
